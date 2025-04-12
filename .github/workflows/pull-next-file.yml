@@ -37,7 +37,7 @@ jobs:
             exit 0
           fi
 
-      - name: Commit and push
+      - name: Commit and push to Repo A
         if: steps.find_file.outputs.filename != ''
         run: |
           git config user.name "${{ secrets.USERNAME }}"
