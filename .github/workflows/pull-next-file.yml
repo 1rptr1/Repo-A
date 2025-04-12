@@ -2,7 +2,7 @@ name: Daily Smart Sync from Repo B
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # Daily at 07:00 UTC
+    - cron: '0 7 * * *'  # Every day at 07:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
         run: |
           git clone https://x-access-token:${{ secrets.REPO_B_PAT }}@github.com/1rptr1/Repo-B.git repo-b
 
-      - name: Find one missing file
+      - name: Find next un-synced file
         id: find_file
         run: |
           mkdir -p solutions
@@ -27,25 +27,21 @@ jobs:
             fname=$(basename "$f")
             if [ ! -f "solutions/$fname" ]; then
               cp "$f" "solutions/$fname"
-              echo "Selected file: $fname"
               echo "filename=$fname" >> $GITHUB_OUTPUT
               break
             fi
           done
 
           if [ -z "$fname" ]; then
-            echo "No new files to copy."
+            echo "No new files to sync."
             exit 0
           fi
 
       - name: Commit and push
         if: steps.find_file.outputs.filename != ''
         run: |
-          git config user.name "${{ secrets.GITHUB_USERNAME }}"
-          git config user.email "${{ secrets.GITHUB_EMAIL }}"
+          git config user.name "${{ secrets.USERNAME }}"
+          git config user.email "${{ secrets.EMAIL }}"
           git add solutions/
           git commit -m "chore: synced file ${{ steps.find_file.outputs.filename }} from Repo B"
           git push https://x-access-token:${{ secrets.REPO_A_PAT }}@github.com/1rptr1/Repo-A.git HEAD:main
-     
-      
-     
