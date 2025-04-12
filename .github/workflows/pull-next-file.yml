@@ -41,9 +41,10 @@ jobs:
       - name: Commit and push
         if: steps.find_file.outputs.filename != ''
         run: |
-          git config user.name "${{ secrets.USERNAME }}"
-          git config user.email "${{ secrets.EMAIL }}"
+          git config user.name "${{ secrets.GITHUB_USERNAME }}"
+          git config user.email "${{ secrets.GITHUB_EMAIL }}"
           git add solutions/
           git commit -m "chore: synced file ${{ steps.find_file.outputs.filename }} from Repo B"
-          git push https://x-access-token:${{ secrets.REPO_B_PAT }}@github.com/1rptr1/Repo-A.git HEAD:main
+          git push https://x-access-token:${{ secrets.REPO_A_PAT }}@github.com/1rptr1/Repo-A.git HEAD:main
+      
      
