@@ -15,7 +15,7 @@ jobs:
 
       - name: Clone Repo B
         run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_PAT }}@github.com/1rptr1/Repo-B.git repo-b
+          git clone https://x-access-token:${{ secrets.REPO_B_PAT }}@github.com/1rptr1/Repo-B.git repo-b
 
       - name: Find next un-synced file
         id: find_file
@@ -44,4 +44,4 @@ jobs:
           git config user.email "${{ secrets.EMAIL }}"
           git add solutions/
           git commit -m "chore: synced file ${{ steps.find_file.outputs.filename }} from Repo B"
-          git push https://x-access-token:${{ secrets.GITHUB_PAT }}@github.com/1rptr1/Repo-A.git HEAD:main
+          git push https://x-access-token:${{ secrets.REPO_B_PAT }}@github.com/1rptr1/Repo-A.git HEAD:main
