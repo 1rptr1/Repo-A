@@ -41,8 +41,8 @@ jobs:
       - name: Commit and push
         if: steps.find_file.outputs.filename != ''
         run: |
-          git config user.name "${{ secrets.GITHUB_USERNAME }}"
-          git config user.email "${{ secrets.GITHUB_USERNAME }}@users.noreply.github.com"
+          git config user.name "${{ secrets.USERNAME }}"
+          git config user.email "${{ secrets.EMAIL }}"
           git add solutions/
           git commit -m "chore: synced file ${{ steps.find_file.outputs.filename }} from Repo B"
           git push
