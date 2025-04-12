@@ -45,4 +45,5 @@ jobs:
           git config user.email "${{ secrets.EMAIL }}"
           git add solutions/
           git commit -m "chore: synced file ${{ steps.find_file.outputs.filename }} from Repo B"
-          git push
+          git push https://x-access-token:${{ secrets.REPO_B_PAT }}@github.com/1rptr1/Repo-A.git HEAD:main
+     
